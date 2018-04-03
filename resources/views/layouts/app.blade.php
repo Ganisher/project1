@@ -16,8 +16,9 @@
 
     <link href="{{ asset('css/AdminLTE.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/skins/_all-skins.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/animate.css') }}" rel="stylesheet">
 </head>
-<body class="skin-blue-light">
+<body class="skin-blue-light maschina-site">
 <div class="wrapper">
     <!-- Main Header -->
     <header class="main-header">
@@ -91,28 +92,59 @@
             </div>
         </nav>
     </header>
+    @auth
     <aside class="main-sidebar">
         <section class="sidebar">
             <ul class="sidebar-menu" data-widget="tree">
                 <li class="header">Администрирование</li>
-                <li class="treeview">
+                <li class="drivers treeview">
                     <a href="#">
                         <i class="fa fa-car"></i> <span>Водители</span>
                         <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
                         </span>
                     </a>
-                    <ul class="treeview-menu">
-                        <li><a href="{{ route('drivers.add') }}">Добавить водителя</a></li>
-                        <li><a href="{{ route('drivers') }}">Список водителей</a></li>
-                        <li><a href="#">Автомобили</a></li>
+                    <ul class="drivers-submenu treeview-menu">
+                        <li class="@if(\Request::route()->getName() == 'drivers.form') active @endif"><a href="{{ route('drivers.form') }}">Добавить водителя</a></li>
+                        <li class="@if(\Request::route()->getName() == 'drivers') active @endif"><a href="{{ route('drivers') }}">Список водителей</a></li>
+                        <li class="@if(\Request::route()->getName() == 'drivers.cars') active @endif"><a href="{{ route('drivers.cars') }}">Автомобили</a></li>
                     </ul>
                 </li>
                 <li class="header">Отчеты</li>
+                <li class="treeview">
+                    <a href="#">
+                        <span>Штрафы</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="{{ route('drivers.penalties') }}">Список водителей и штрафы</a></li>
+                    </ul>
+                </li>
+                <li class="installments treeview">
+                    <a href="#">
+                        <span>Рассрочка</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="installments-submenu treeview-menu">
+                        <li><a href="{{ route('installments.payments') }}">Выплаты по рассрочкам</a></li>
+                        <li><a href="{{ route('installments.upload') }}">Загрузка рассрочки на выкуп</a></li>
+                    </ul>
+                </li>
             </ul>
         </section>
     </aside>
+    @endauth
     <div class="content-wrapper">
+        <div class="maschina-site-preloader text-center" style="display: none; padding: 10px 0;">
+            <i class="fa fa-spinner fa-spin fa-3x"></i>
+            <p>
+                Пожалуйста, подождите, идет обработка запроса.
+            </p>
+        </div>
         @yield('content')
     </div>
 </div>
@@ -121,5 +153,19 @@
 <script src="{{ asset('js/jquery-ui.min.js') }}"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="{{ asset('js/adminlte.min.js') }}"></script>
+<script src="{{ asset('js/app.js') }}"></script>
+<script src="{{ asset('js/bootstrap-notify.min.js') }}"></script>
+<script>
+    @if(strpos(\Request::route()->getName(), 'drivers') !== false)
+        $('.drivers').addClass('menu-open');
+        $('.drivers-submenu').css('display', 'block');
+    @endif
+
+    @if(strpos(\Request::route()->getName(), 'installments') !== false)
+    $('.installments').addClass('menu-open');
+    $('.installments-submenu').css('display', 'block');
+    @endif
+</script>
+@yield('scripts')
 </body>
 </html>
