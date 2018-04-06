@@ -24,6 +24,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/drivers/penalties', 'DriversController@driversPenalties')->name('drivers.penalties');
     Route::get('/drivers/penalties/form', 'DriversController@penaltiesCheckFormPage')->name('drivers.penaltiesCheckForm');
     Route::any('/drivers/penalties/submit', 'DriversController@penaltiesCheck')->name('drivers.penaltiesCheck');
+    Route::post('/drivers/penalties/savePenalty', 'DriversController@penaltiesSave')->name('drivers.penaltiesSave');
 
     Route::get('/installments/payments', 'InstallmentsController@paymentsPage')->name('installments.payments');
     Route::get('/installments/upload', 'InstallmentsController@uploadPage')->name('installments.upload');

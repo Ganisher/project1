@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Car;
 use App\Driver;
+use Carbon\Carbon;
 use Curl\Curl;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Response;
 
@@ -82,7 +84,10 @@ class DriversController extends Controller
     # штрафы
     public function driversPenalties()
     {
-        return view('drivers.fines');
+        $penalties = DB::table('penalties')->get();
+        return view('drivers.fines', [
+            'penalties' => $penalties
+        ]);
     }
 
     # страница со списком автомобилей
@@ -116,5 +121,34 @@ class DriversController extends Controller
         }
         else
             return 'Переданы неправильные данные';
+    }
+
+    public function penaltiesSave()
+    {
+        $penaltiesInfo = Input::get('penaltiesInfo');
+        if($penaltiesInfo)
+        {
+            $penaltiesDataToInsertInDB = [];
+            foreach ($penaltiesInfo as $penalty)
+            {
+                $penaltiesDataToInsertInDB[] = [
+                    'firstName' => $penalty['firstName'],
+                    'lastName' => $penalty['lastName'],
+                    'violationName' => $penalty['violationName'],
+                    'violationDate' => Carbon::parse($penalty['violationDate'])->format('Y-m-d'),
+                    'violationTime' => $penalty['violationTime'],
+                    'violationPlace' => $penalty['violationPlace'],
+                    'amount' => $penalty['amount']
+                ];
+            }
+
+            if(count($penaltiesDataToInsertInDB))
+                $penalties = DB::table('penalties')->insert($penaltiesDataToInsertInDB);
+
+            if($penalties)
+                return Response::json([
+                    'data' => 'Данные успешно сохранены!'
+                ], 200);
+        }
     }
 }

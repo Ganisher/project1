@@ -9,6 +9,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="box">
+                        @if(count($penalties))
                         <div class="box-body table-responsive no-padding">
                             <table class="table table-bordered table-hover">
                                 <tbody>
@@ -17,28 +18,29 @@
                                     <th>Имя</th>
                                     <th>Фамилия</th>
                                     <th>Штраф</th>
-                                    <th>Сумма</th>
                                     <th>Дата</th>
+                                    <th>Время</th>
+                                    <th>Место</th>
+                                    <th>Сумма</th>
                                 </tr>
+                                @foreach($penalties as $penalty)
                                 <tr>
-                                    <td>22</td>
-                                    <td>Тимур</td>
-                                    <td>Глазков</td>
-                                    <td>Превышение скорости на 10-20 км/ч</td>
-                                    <td>19 820</td>
-                                    <td>01.01.17</td>
+                                    <td>{{ $penalty->id }}</td>
+                                    <td>{{ $penalty->firstName }}</td>
+                                    <td>{{ $penalty->lastName }}</td>
+                                    <td width="20%">{{ $penalty->violationName }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($penalty->violationDate)->format('d-m-Y') }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($penalty->violationTime)->format('H:i') }}</td>
+                                    <td>{{ $penalty->violationPlace }}</td>
+                                    <td>{{ $penalty->amount }}</td>
                                 </tr>
-                                <tr>
-                                    <td>56</td>
-                                    <td>Николай</td>
-                                    <td>Козлов</td>
-                                    <td>Не уступил дорого пещеходу</td>
-                                    <td>19 820</td>
-                                    <td>21.01.17</td>
-                                </tr>
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>
+                        @else
+                        <div class="text-center">Нет сохраненных штрафов.</div>
+                        @endif
                     </div>
                 </div>
             </div>

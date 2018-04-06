@@ -6,7 +6,7 @@
             <div class="col-md-6 col-md-offset-3">
                 <div class="box box-primary">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Login Form</h3>
+                        <h3 class="box-title">Форма входа</h3>
                     </div>
                     <!-- /.box-header -->
                     <!-- form start -->
@@ -14,7 +14,7 @@
                         @csrf
                         <div class="box-body">
                             <div class="form-group">
-                                <label for="username" class="col-sm-2 control-label">Username</label>
+                                <label for="username" class="col-sm-2 control-label">Логин</label>
 
                                 <div class="col-sm-10">
                                     {{--<input type="email" class="form-control" id="inputEmail3" placeholder="Email">--}}
@@ -28,7 +28,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+                                <label for="inputPassword3" class="col-sm-2 control-label">Пароль</label>
 
                                 <div class="col-sm-10">
                                     {{--<input type="password" class="form-control" id="inputPassword3" placeholder="Password">--}}

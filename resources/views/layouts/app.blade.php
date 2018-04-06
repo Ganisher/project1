@@ -16,7 +16,9 @@
 
     <link href="{{ asset('css/AdminLTE.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/skins/_all-skins.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/bootflat.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/animate.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body class="skin-blue-light maschina-site">
 <div class="wrapper">
@@ -120,6 +122,7 @@
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="{{ route('drivers.penalties') }}">Список водителей и штрафы</a></li>
+                        <li><a href="{{ route('drivers.penaltiesCheckForm') }}">Проверить штраф</a></li>
                     </ul>
                 </li>
                 <li class="installments treeview">
@@ -139,12 +142,6 @@
     </aside>
     @endauth
     <div class="content-wrapper">
-        <div class="maschina-site-preloader text-center" style="display: none; padding: 10px 0;">
-            <i class="fa fa-spinner fa-spin fa-3x"></i>
-            <p>
-                Пожалуйста, подождите, идет обработка запроса.
-            </p>
-        </div>
         @yield('content')
     </div>
 </div>
